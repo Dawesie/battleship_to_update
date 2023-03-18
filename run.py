@@ -12,8 +12,7 @@ def create_board(data):
     This function sets up a grid on which the game will be palyed.
 
     """
-    grid_size = data
-    grid = [['o']*grid_size for x in range(grid_size)] 
+    grid = [['o'] * data for x in range(data)] 
     for r in grid:
         for c in r:
             print(c,end = " ")
@@ -21,25 +20,29 @@ def create_board(data):
     return grid
 
 
-
 def position_ships(board):
     """
     To determin the row and column positions of the battle ships. 
     """
-    ship_board = board
     for x in range(3):
         y = randint(0,2)
-        ship_board[x][y] = 'S'
-    return ship_board
+        board[x][y] = 'S'
+    return board
 
 
+def get_guess(size):
+    """
+    To get row and colum positon from the player, where torppedos are to be launched. 
+    """
+    guess = []
+    row = input(f'Please enter a row value between 0 and {size - 1}\n')
+    print (f'You entered {row}')
+    validate_guess(row)
 
 
-def get_gesses():
-    pass
+def validate_guess(value):
 
-def validate_guess():
-    pass
+    print(value)
 
 
 grid_size = 3
@@ -47,4 +50,5 @@ board = create_board(grid_size)
 print(board)
 ship_grid = position_ships(board)
 print(ship_grid)
+guess = get_guess(grid_size)
 
