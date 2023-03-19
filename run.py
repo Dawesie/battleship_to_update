@@ -36,7 +36,7 @@ def position_ships(board, size):
 def get_guess(size):
     """
     To get row and colum positon from the player, where torppedos
-    are to be launched to on the board. 
+    are to be launched onto the board. 
     """
     guess = []
     row = input(f'Please enter a row number between 0 and {size - 1}\n')
