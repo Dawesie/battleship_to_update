@@ -48,23 +48,27 @@ def get_guess(size):
     guess.append(col)
     print(f'Column value is: {col}')
     return guess
-    
-
-
 
 def validate_guess(num, size):
     """
     To check the values entered are intergers, that
     values do not exceed the size of the board.
     """
-
-    while not num.isnumeric():
-        num = input(f'You need to enter a number between 0 and {size - 1}\n')
-    num = int(num)
-    while not 0 <= num <= size - 1:
-        num = int(input(f'Your number must be between 0 and {size-1}\n'))
-    return num
-
+    ok = False
+    while ok == False:
+        try:
+            num == int(num)
+            if  not int(num) >= 0:
+                raise ValueError
+            elif not int(num) <= size-1:
+                raise ValueError
+            else:
+                ok = True
+        except ValueError:
+            print(f'Your input must be a whole number between 0 and {size-1}.')
+            num = input(f'Please type in a number:\n')
+    print(num)
+    return int(num)
   
  
 
