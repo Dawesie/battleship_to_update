@@ -1,13 +1,13 @@
 from random import randint
 from array import *
 
-name = input(f'Hello!\nPlease enter your name: ')
+name = input('Hello!\nPlease enter your name: ')
 
 
 print(f"Welcome to My Battleship Admiral {name}.\n")
-print(f'Your mission:')
-print(f"To locate and destroy all of the enemies' battleships,") 
-print(f'BEFORE your torpedoes RUN OUT.\n')
+print('Your mission:')
+print("To locate and destroy all of the enemies' battleships,") 
+print('BEFORE your torpedoes RUN OUT.\n')
 
 
 def create_board(data):
@@ -17,7 +17,7 @@ def create_board(data):
     grid = [['o'] * data for x in range(data)] 
     for r in grid:
         for c in r:
-            print(c,end = " ")
+            print(c, end = " ")
         print()
     return grid
 
@@ -28,7 +28,7 @@ def position_ships(board, size):
     To place the battleships on the board.
     """
     for x in range(size):
-        y = randint(0,size - 1)
+        y = randint(0, size - 1)
         board[x][y] = 'S'
     return board
 
@@ -39,15 +39,16 @@ def get_guess(size):
     are to be launched onto the board. 
     """
     guess = []
-    row = input(f'Please enter a row number between 0 and {size - 1}\n')
+    row = input(f'Please enter a row number between 0 and {size - 1}.\n')
     row = validate_guess(row, size)
     guess.append(row)
     print(f'Row value is: {row}')
-    col = input(f'Please enter a column value between 0 and {size - 1}\n')
+    col = input(f'Please enter a column value between 0 and {size - 1}.\n')
     col = validate_guess(col, size)
     guess.append(col)
     print(f'Column value is: {col}')
     return guess
+
 
 def validate_guess(num, size):
     """
@@ -55,29 +56,31 @@ def validate_guess(num, size):
     values do not exceed the size of the board.
     """
     ok = False
-    while ok == False:
+    while ok is False:
         try:
-            num == int(num)
-            if  not int(num) >= 0:
+            num = int(num)
+            if int(num) < 0:
                 raise ValueError
-            elif not int(num) <= size-1:
+            if int(num) > size-1:
                 raise ValueError
             else:
                 ok = True
         except ValueError:
             print(f'Your input must be a whole number between 0 and {size-1}.')
-            num = input(f'Please type in a number:\n')
-    print(num)
+            num = input('Please type in a number:\n')
     return int(num)
-  
- 
+
+
+def duplication_check(data, grid):
+    print(data)
+    print(grid)
+
 
 grid_size = 3
-player_guess = [['o'] * grid_size for x in range(grid_size)] 
+player_board = [['o'] * grid_size for x in range(grid_size)] 
 board = create_board(grid_size)
-print() 
-print(f"player's guess: {player_guess}")
-print(f'playing board: {board}')
+print()
+print(f"player's guess: {player_board}")
 ship_grid = position_ships(board, grid_size)
 print()
 print(f'playing board with ships: {ship_grid}')
@@ -85,4 +88,7 @@ print()
 guess = get_guess(grid_size)
 print()
 print(guess)
+duplication_check(guess, player_board)
+
+
 
