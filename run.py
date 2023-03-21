@@ -48,7 +48,6 @@ def get_guess(size, grid):
     guess.append(col)
     print(f'Column value is: {col}')
     print()
-    print(guess)
     return guess
 
 
@@ -72,6 +71,23 @@ def validate_guess(num, size):
     return int(num)
 
 
+def update_board(data, board, ships):
+    if ships[data[0]][data[1]] == 'S':
+        print(f'Your {data} guess resulted in a Hit')
+        board[data[0]][data[1]] = 'S'
+        print(board)
+    else:
+        print(f'Your {data} guess resulted in a miss')
+        board[data[0]][data[1]] = 'X'
+        print(board)
+    
+    for r in board:
+        for c in r:
+            print(c, end=" ")
+        print()
+    return board
+
+
 board_size = 3
 player_board = [['o'] * board_size for x in range(board_size)] 
 board = create_board(board_size)
@@ -84,5 +100,7 @@ print()
 guess = get_guess(board_size, player_board)
 print()
 print(guess)
+new_board = update_board(guess, player_board, ship_grid)
+print(new_board)
 
 
