@@ -6,7 +6,7 @@ name = input('Hello!\nPlease enter your name: ')
 
 print(f"Welcome to My Battleship Admiral {name}.\n")
 print('Your mission:')
-print("To locate and destroy all of the enemies' battleships,") 
+print("To locate and destroy all of the enemies' battleships,")
 print('BEFORE your torpedoes RUN OUT.\n')
 
 
@@ -14,17 +14,17 @@ def create_board(data):
     """
     This function sets up a grid on which the game will be palyed.
     """
-    grid = [['o'] * data for x in range(data)] 
+    grid = [['o'] * data for x in range(data)]
     for r in grid:
         for c in r:
-            print(c, end = " ")
+            print(c, end=" ")
         print()
     return grid
 
 
 def position_ships(board, size):
     """
-    To determin the row and column positions of the battleships. 
+    To determin the row and column positions of the battleships.
     To place the battleships on the board.
     """
     for x in range(size):
@@ -33,7 +33,7 @@ def position_ships(board, size):
     return board
 
 
-def get_guess(size):
+def get_guess(size, grid):
     """
     To get row and colum positon from the player, where torppedos
     are to be launched onto the board. 
@@ -47,21 +47,22 @@ def get_guess(size):
     col = validate_guess(col, size)
     guess.append(col)
     print(f'Column value is: {col}')
+    print()
+    print(guess)
     return guess
 
 
 def validate_guess(num, size):
     """
     To check the values entered are intergers, that
-    values do not exceed the size of the board.
+    values do not exceed the size of the board and
+    there are no duplicate guesses.
     """
     ok = False
     while ok is False:
         try:
             num = int(num)
-            if int(num) < 0:
-                raise ValueError
-            if int(num) > size-1:
+            if int(num) < 0 or int(num) > size-1:
                 raise ValueError
             else:
                 ok = True
@@ -71,24 +72,17 @@ def validate_guess(num, size):
     return int(num)
 
 
-def duplication_check(data, grid):
-    print(data)
-    print(grid)
-
-
-grid_size = 3
-player_board = [['o'] * grid_size for x in range(grid_size)] 
-board = create_board(grid_size)
+board_size = 3
+player_board = [['o'] * board_size for x in range(board_size)] 
+board = create_board(board_size)
 print()
 print(f"player's guess: {player_board}")
-ship_grid = position_ships(board, grid_size)
+ship_grid = position_ships(board, board_size)
 print()
 print(f'playing board with ships: {ship_grid}')
 print()
-guess = get_guess(grid_size)
+guess = get_guess(board_size, player_board)
 print()
 print(guess)
-duplication_check(guess, player_board)
-
 
 
