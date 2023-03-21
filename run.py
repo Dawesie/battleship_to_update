@@ -6,13 +6,19 @@ name = input('Hello!\nPlease enter your name: ')
 
 print(f"Welcome to My Battleship Admiral {name}.\n")
 print('Your mission:')
-print("To locate and destroy all of the enemies' battleships,")
-print('BEFORE your torpedoes RUN OUT.\n')
+print("To locate and destroy all of the enemies' ")
+print('battleships, BEFORE your torpedoes RUN OUT.\n')
+print('*' * 50)
+print()
+print('There are 4 missions to choose from,')
+print('the higher the number, the greater the sKill')
+print('needed to complete your task.')
+
 
 
 def create_board(data):
     """
-    This function sets up a grid on which the game will be palyed.
+   To set up the grid on which the game will be palyed.
     """
     grid = [['o'] * data for x in range(data)]
     for r in grid:
@@ -25,7 +31,6 @@ def create_board(data):
 def position_ships(board, size):
     """
     To determin the row and column positions of the battleships.
-    To place the battleships on the board.
     """
     for x in range(size):
         y = randint(0, size - 1)
