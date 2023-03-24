@@ -15,7 +15,6 @@ print('the higher the number, the greater the sKill')
 print('needed to complete your task.')
 
 
-
 def create_board(data):
     """
    To set up the grid on which the game will be palyed.
@@ -59,8 +58,7 @@ def get_guess(size, grid):
 def validate_guess(num, size):
     """
     To check the values entered are intergers, that
-    values do not exceed the size of the board and
-    there are no duplicate guesses.
+    values do not exceed the size of the board.
     """
     ok = False
     while ok is False:
@@ -76,13 +74,17 @@ def validate_guess(num, size):
     return int(num)
 
 
+def duplicate_check(num, grid):
+
+
+
 def update_board(data, board, ships):
     if ships[data[0]][data[1]] == 'S':
-        print(f'Your {data} guess resulted in a Hit')
+        print(f'Your {data} guess resulted in a Hit!')
         board[data[0]][data[1]] = 'S'
         print(board)
     else:
-        print(f'Your {data} guess resulted in a miss')
+        print(f'Your {data} guess resulted in a miss.')
         board[data[0]][data[1]] = 'X'
         print(board)
     
@@ -94,7 +96,8 @@ def update_board(data, board, ships):
 
 
 board_size = 3
-player_board = [['o'] * board_size for x in range(board_size)] 
+torpedos = 2
+player_board = [['o'] * board_size for x in range(board_size)]
 board = create_board(board_size)
 print()
 print(f"player's guess: {player_board}")
@@ -102,10 +105,18 @@ ship_grid = position_ships(board, board_size)
 print()
 print(f'playing board with ships: {ship_grid}')
 print()
-guess = get_guess(board_size, player_board)
-print()
-print(guess)
-new_board = update_board(guess, player_board, ship_grid)
-print(new_board)
-
-
+play_on = False
+while play_on == False and torpedos > 0:
+    guess = get_guess(board_size, player_board)
+    print()
+    new_board = update_board(guess, player_board, ship_grid)
+    print()
+    torpedos -= 1
+    print('Launch another torpedo?')
+    print('Press any key to contiue or n to exit.')
+    ans = input()
+    print(ans)
+    if ans == 'n' or ans == 'N':
+        play_on = True
+        print('Game has stoped at your request')
+print(torpedos)
