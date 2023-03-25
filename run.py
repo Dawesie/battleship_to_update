@@ -35,13 +35,10 @@ def get_guess(size, grid):
         row = input(f'Please enter a row number between 0 and {size - 1}.\n')
         row = validate_guess(row, size)
         location.append(row)
-        print(f'Row value is: {row}\n')
         col = input(f'Please enter a column value between 0 and {size - 1}.\n')
         col = validate_guess(col, size)
         location.append(col)
-        print(f'Column value is: {col}\n')
         duplicate = duplicate_check(location, grid)
-        print(duplicate)
     return location
 
 
@@ -67,9 +64,8 @@ def validate_guess(num, size):
 def duplicate_check(check, grid):
     """
     To check for duplicate guesses and request new guess if there
-    are duplicates.
+    duplicate is given.
     """
-    print(f'current guess in {check}\n')
     num1 = check[0]
     num2 = check[1]
     if grid[num1][num2] == 'X' or grid[num1][num2] == 'S':
@@ -81,7 +77,7 @@ def duplicate_check(check, grid):
     return duplicate
 
 
-def update_board(data, player, ships):
+def update_board(data, player, ships, sunk_ships):
     """
     Takes players guess, updates and prints the current playing board.
     """
@@ -90,16 +86,16 @@ def update_board(data, player, ships):
     if ships[row][col] == 'S':
         print(f'Your {data} guess resulted in a Hit!')
         player[row][col] = 'S'
+        sunk_ships += 1
         print(player)
     else:
         print(f'Your {data} guess resulted in a miss.')
         player[row][col] = 'X'
-        print(player)
     for r in player:
         for c in r:
             print(c, end=" ")
         print()
-    return player
+    return player, sunk_ships
 
 
 name = input('Hello!\nPlease enter your name: ')
@@ -126,18 +122,22 @@ ship_grid = position_ships(board, board_size)
 print()
 print(f'playing board with ships: {ship_grid}')
 print()
+battleships = 0
 play_on = False
 while play_on is False and torpedos > 0:
     guess = get_guess(board_size, player_board)
-    new_board = update_board(guess, player_board, ship_grid)
+    result = update_board(guess, player_board, ship_grid, battleships)
+    new_board = result[0]
+    battleships = result[1]
+    print()
+    print(f'You have sunk {battleships} battleships\n')
     print()
     torpedos -= 1
     print(f'You have {torpedos} torpedo(s) left')
     print('Launch another torpedo?')
     print('Press any key to contiue or n to exit.')
     ans = input()
-    print(ans)
+    print()
     if ans == 'n' or ans == 'N':
         play_on = True
-        print('Game has stopped at your request')
-print(torpedos)
+        print(f"Mission has been aborted on Admiral {name}'s orders.")
