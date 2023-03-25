@@ -84,10 +84,10 @@ def update_board(data, player, ships, sunk_ships):
     row = data[0]
     col = data[1]
     if ships[row][col] == 'S':
-        print(f'Your {data} guess resulted in a Hit!')
+        print(f'Your {data} launch has resulted in a Hit!')
+        print(f'Congratulations, Admiral {name}\n')
         player[row][col] = 'S'
         sunk_ships += 1
-        print(player)
     else:
         print(f'Your {data} guess resulted in a miss.')
         player[row][col] = 'X'
@@ -98,7 +98,7 @@ def update_board(data, player, ships, sunk_ships):
     return player, sunk_ships
 
 
-name = input('Hello!\nPlease enter your name: ')
+name = input('Please enter your name: ')
 
 
 print(f"Welcome to My Battleship Admiral {name}.\n")
@@ -114,6 +114,7 @@ print('needed to complete your task.')
 
 board_size = 3
 torpedos = 6
+fleet = 3
 player_board = [['o'] * board_size for x in range(board_size)]
 board = create_board(board_size)
 print()
@@ -124,20 +125,29 @@ print(f'playing board with ships: {ship_grid}')
 print()
 battleships = 0
 play_on = False
-while play_on is False and torpedos > 0:
+while play_on is False:
     guess = get_guess(board_size, player_board)
     result = update_board(guess, player_board, ship_grid, battleships)
     new_board = result[0]
     battleships = result[1]
     print()
     print(f'You have sunk {battleships} battleships\n')
-    print()
     torpedos -= 1
-    print(f'You have {torpedos} torpedo(s) left')
-    print('Launch another torpedo?')
-    print('Press any key to contiue or n to exit.')
-    ans = input()
-    print()
-    if ans == 'n' or ans == 'N':
+    print(f'You have {torpedos} torpedo(s) left.\n')
+    if torpedos == 0 or battleships == fleet:
+        print('!!! Mission Over !!!')
         play_on = True
-        print(f"Mission has been aborted on Admiral {name}'s orders.")
+    else:
+        print('Launch another torpedo?')
+        print('Press any key to contiue or n to exit.')
+        ans = input()
+        print()
+        if ans == 'n' or ans == 'N':
+            play_on = True
+            print(f"Mission has been aborted on Admiral {name}'s orders.")
+if torpedos == 0 or battleships != fleet:
+    print('Enemy ships have evaded your tropedoes and captured your ships!')
+    print(f'Better luck next time Admiral {name}!')
+else:
+    if battleships == fleet:
+        print(f"Well done Admrial {name} for destroying the enemies fleet!")
