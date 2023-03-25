@@ -1,6 +1,17 @@
 from random import randint
 
 
+class Missions():
+    """
+        Sets up the mission to be played by the player.
+        """
+
+    def __init__(self, board_size, torpedoes, fleet):
+        self.board_size = board_size
+        self.torpedoes = torpedoes
+        self.fleet = fleet
+
+
 def create_board(data):
     """
    To set up the grid on which the game will be palyed.
@@ -26,16 +37,16 @@ def position_ships(grid, size):
 
 def get_guess(size, grid):
     """
-    To get row and colum positon from the player, where torpedos
+    To get row and colum positon from the player, where torpedoes
     are to be launched onto the board.
     """
     duplicate = True
     while duplicate is True:
         location = []
-        row = input(f'Please enter a row number between 0 and {size - 1}.\n')
+        row = input(f'Enter a row number from 0 and {size - 1}.\n')
         row = validate_guess(row, size)
         location.append(row)
-        col = input(f'Please enter a column value between 0 and {size - 1}.\n')
+        col = input(f'Enter a column value from 0 and {size - 1}.\n')
         col = validate_guess(col, size)
         location.append(col)
         duplicate = duplicate_check(location, grid)
@@ -57,7 +68,7 @@ def validate_guess(num, size):
                 ok = True
         except ValueError:
             print(f'Your input must be a whole number between 0 and {size-1}.')
-            num = input('Please type in a number:\n')
+            num = input('Type in a number:\n')
     return int(num)
 
 
@@ -70,7 +81,7 @@ def duplicate_check(check, grid):
     num2 = check[1]
     if grid[num1][num2] == 'X' or grid[num1][num2] == 'S':
         print(f'Current guess {check} is a duplicate\n')
-        print('Please re-enter your guess.\n')
+        print('Re-enter your guess.\n')
         duplicate = True
     else:
         duplicate = False
@@ -98,39 +109,43 @@ def update_board(data, player, ships, sunk_ships):
     return player, sunk_ships
 
 
-name = input('Please enter your name: ')
-
-print(f"Welcome to My Battleship Admiral {name}.\n")
-print('Your mission:')
-print("To locate and destroy all of the enemies' ")
-print('battleships, BEFORE your torpedoes RUN OUT.\n')
-print('*' * 50)
-print('There are 4 missions to choose from,')
-print('the higher the number, the greater the skill')
-print('needed to complete your task.')
-print('*' * 50)
-print('Mission 0: Is a 3 x 3 grid, with 3 enemy ships,')
-print('that must be destroyed with 6 torpeodoes.')
-print()
-print('Mission 1: Is a 4 x 4 grid, with 4 enemy ships,')
-print('that must be destroyed with 11 torpeodoes.')
-print()
-print('Mission 2: Is a 5 x 5 grid, with 5 enemy ships,')
-print('that must be destroyed with 17 torpeodoes.')
-print('*' * 50)
-
-max = 3
-mission_level = input(f'Please select your mission number, Admiral {name} \n')
-game = validate_guess(mission_level, max)
-print(game)
+name = input('Enter your name: ')
 
 
+def play_game():
+    print(f"Welcome to My Battleship Admiral {name}.\n")
+    print('Your mission:')
+    print("To locate and destroy all of the enemies' ")
+    print('battleships, BEFORE your torpedoes RUN OUT.\n')
+    print('*' * 50)
+    print('There are 4 missions to choose from,')
+    print('the higher the number, the greater the skill')
+    print('needed to complete your task.')
+    print('*' * 50)
+    print('Mission 0: Is a 3 x 3 grid, with 3 enemy ships,')
+    print('that must be destroyed with 6 torpeodoes.')
+    print()
+    print('Mission 1: Is a 4 x 4 grid, with 4 enemy ships,')
+    print('that must be destroyed with 11 torpeodoes.')
+    print()
+    print('Mission 2: Is a 5 x 5 grid, with 5 enemy ships,')
+    print('that must be destroyed with 17 torpeodoes.')
+    print('*' * 50)
+
+    max = 3
+    mission_level = input(
+        f'Select your mission number, Admiral {name} \n')
+    game = validate_guess(mission_level, max)
+    print(game)
+
+
+play_game()
 board_size = 3
-torpedos = 6
+torpedoes = 6
 fleet = 3
 player_board = [['o'] * board_size for x in range(board_size)]
 board = create_board(board_size)
-print()
+print('Note: TOP LEFT HAND  "o" is ROW 0, COLUMN 0')
 print(f"player's guess: {player_board}")
 ship_grid = position_ships(board, board_size)
 print()
@@ -145,18 +160,18 @@ while play_on is False:
     battleships = result[1]
     print()
     print(f'You have sunk {battleships} battleships.\n')
-    torpedos -= 1
-    print(f'You have {torpedos} torpedo(s) left.\n')
-    if torpedos == 0 or battleships == fleet:
+    torpedoes -= 1
+    print(f'You have {torpedoes} torpedo(s) left.\n')
+    if torpedoes == 0 or battleships == fleet:
         print('!!! Mission Over !!!')
         play_on = True
-        if torpedos == 0 or battleships != fleet:
+        if torpedoes == 0 or battleships != fleet:
             print('Enemy ships have evaded your tropedoes!')
             print(f'Better luck next time Admiral {name}!')
         else:
             if battleships == fleet:
                 print(f'"Well done Admrial {name}')
-                print('You have destroying the enemies fleet!')
+                print('You have destroyed the enemies fleet!')
     else:
         print('Launch another torpedo?')
         print('Press any key to continue or n to exit.')
