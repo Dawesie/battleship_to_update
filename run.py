@@ -13,7 +13,7 @@ def create_board(data):
     return grid
 
 
-def position_ships(board, size):
+def position_ships(grid, size):
     """
     To determin the row and column positions of the battleships.
     """
@@ -24,22 +24,25 @@ def position_ships(board, size):
     return grid
 
 
-def get_guess(size, board):
+def get_guess(size, grid):
     """
     To get row and colum positon from the player, where torpedos
     are to be launched onto the board.
     """
-    guess = []
-    row = input(f'Please enter a row number between 0 and {size - 1}.\n')
-    row = validate_guess(row, size)
-    guess.append(row)
-    print(f'Row value is: {row}')
-    col = input(f'Please enter a column value between 0 and {size - 1}.\n')
-    col = validate_guess(col, size)
-    guess.append(col)
-    print(f'Column value is: {col}')
-    print()
-    return guess
+    duplicate = True
+    while duplicate is True:
+        location = []
+        row = input(f'Please enter a row number between 0 and {size - 1}.\n')
+        row = validate_guess(row, size)
+        location.append(row)
+        print(f'Row value is: {row}\n')
+        col = input(f'Please enter a column value between 0 and {size - 1}.\n')
+        col = validate_guess(col, size)
+        location.append(col)
+        print(f'Column value is: {col}\n')
+        duplicate = duplicate_check(location, grid)
+        print(duplicate)
+    return location
 
 
 def validate_guess(num, size):
@@ -61,11 +64,24 @@ def validate_guess(num, size):
     return int(num)
 
 
-def duplicate_check(num, grid):
-    pass
+def duplicate_check(check, grid):
+    """
+    To check for duplicate guesses and request new guess if there
+    are duplicates.
+    """
+    print(f'current guess in {check}\n')
+    num1 = check[0]
+    num2 = check[1]
+    if grid[num1][num2] == 'X' or grid[num1][num2] == 'S':
+        print(f'Current guess {check} is a duplicate\n')
+        print('Please re-enter your guess.\n')
+        duplicate = True
+    else:
+        duplicate = False
+    return duplicate
 
 
-def update_board(data, board, ships):
+def update_board(data, player, ships):
     """
     Takes players guess, updates and prints the current playing board.
     """
@@ -73,17 +89,17 @@ def update_board(data, board, ships):
     col = data[1]
     if ships[row][col] == 'S':
         print(f'Your {data} guess resulted in a Hit!')
-        board[row][col] = 'S'
-        print(board)
+        player[row][col] = 'S'
+        print(player)
     else:
         print(f'Your {data} guess resulted in a miss.')
-        board[row][col] = 'X'
-        print(board)
-    for r in board:
+        player[row][col] = 'X'
+        print(player)
+    for r in player:
         for c in r:
             print(c, end=" ")
         print()
-    return board
+    return player
 
 
 name = input('Hello!\nPlease enter your name: ')
@@ -101,7 +117,7 @@ print('needed to complete your task.')
 
 
 board_size = 3
-torpedos = 2
+torpedos = 6
 player_board = [['o'] * board_size for x in range(board_size)]
 board = create_board(board_size)
 print()
@@ -111,9 +127,8 @@ print()
 print(f'playing board with ships: {ship_grid}')
 print()
 play_on = False
-while play_on == False and torpedos > 0:
+while play_on is False and torpedos > 0:
     guess = get_guess(board_size, player_board)
-    print()
     new_board = update_board(guess, player_board, ship_grid)
     print()
     torpedos -= 1
