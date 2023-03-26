@@ -27,8 +27,8 @@ class Missions:
         ship_grid = position_ships(board, self.board_size)
         print()
         battleships = 0
-        play_on = False
-        while play_on is False:
+        play_on = True
+        while play_on is True:
             guess = get_guess(self.board_size, player_board)
             battleships = update_board(
                 guess, player_board, ship_grid, battleships)
@@ -38,21 +38,28 @@ class Missions:
             print(f'You have {self.torpedoes} torpedo(es) left.\n')
             if self.torpedoes == 0 or battleships == self.fleet:
                 print('!!! Mission Over !!!')
-                play_on = True
-                if self.torpedoes == 0 or battleships != self.fleet:
+
+                if battleships == self.fleet:
+                    print(f'"Well done Admrial {name}')
+                    print('You have destroyed the enemies fleet!\n \n')
+                    break
+
+                if battleships == self.fleet and self.torpedoes == 0:
+                    print(f'"Well done Admrial {name}')
+                    print('You have destroyed the enemies fleet!\n \n')
+                    break
+
+                if self.torpedoes == 0:
                     print('Enemy ships have evaded your tropedoes!')
-                    print(f'Better luck next time Admiral {name}!')
-                else:
-                    if battleships == self.fleet:
-                        print(f'"Well done Admrial {name}')
-                        print('You have destroyed the enemies fleet!')
+                    print(f'Better luck next time Admiral {name}!\n \n')
+                    break
             else:
                 print('Launch another torpedo?')
                 print('Press any key to continue or n to exit.')
                 ans = input()
                 print()
                 if ans == 'n' or ans == 'N':
-                    play_on = True
+                    play_on = False
                     print(
                         f"Mission aborted, on Admiral {name}'s orders.\n \n")
 
