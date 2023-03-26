@@ -1,3 +1,13 @@
+"""
+This module is a version of the BattleShip game.  Apart from
+inporting a random number generator function from python's
+built in function random, the module is self-contained.  It has a
+class that generates the playing board from the level choosen by the
+player.  The class contains a mumber of methods that ask for inputs,
+validate input, checks for duplicates, and updates the game after
+each input until a conclusion is drawn.
+"""
+
 from random import randint
 
 
@@ -52,9 +62,9 @@ def create_board(data):
    To set up the grid on which the game will be palyed.
     """
     grid = [['o'] * data for x in range(data)]
-    for r in grid:
-        for c in r:
-            print(c, end=" ")
+    for row in grid:
+        for col in row:
+            print(col, end=" ")
         print()
     return grid
 
@@ -64,9 +74,9 @@ def position_ships(grid, size):
     To determine the row and column positions of the battleships.
     """
     board = grid
-    for x in range(size):
-        y = randint(0, size - 1)
-        board[x][y] = 'S'
+    for horizontal in range(size):
+        vertical = randint(0, size - 1)
+        board[horizontal][vertical] = 'S'
     return board
 
 
@@ -93,14 +103,14 @@ def validate_guess(num, size):
     To check the values entered are intergers, that
     values do not exceed the size of the board.
     """
-    ok = False
-    while ok is False:
+    o_k = False
+    while o_k is False:
         try:
             num = int(num)
             if int(num) < 0 or int(num) > size-1:
                 raise ValueError
             else:
-                ok = True
+                o_k = True
         except ValueError:
             print(f'Your input must be a whole number from 0 to {size-1}.')
             num = input('Type in a number:\n')
@@ -136,9 +146,9 @@ def update_board(data, player, ships, sunk_ships):
     else:
         print(f'Your {data} guess resulted in a miss.')
         player[row][col] = 'X'
-    for r in player:
-        for c in r:
-            print(c, end=" ")
+    for row in player:
+        for col in row:
+            print(col, end=" ")
         print()
     return sunk_ships
 
@@ -167,10 +177,10 @@ def play_game():
     print('that must be destroyed with 17 torpeodoes.')
     print('*' * 50)
     print()
-    max = 3
+    top_level = 3
     mission_level = input(
         f'Select your mission number, Admiral {name} \n')
-    game = validate_guess(mission_level, max)
+    game = validate_guess(mission_level, top_level)
     if game == 0:
         Missions(3, 6, 3)
     elif game == 1:
@@ -181,15 +191,15 @@ def play_game():
 
 name = input('Enter your name: ')
 
-play_again = True
-while play_again is True:
+PLAY_AGAIN = True
+while PLAY_AGAIN is True:
     play_game()
-    check = False
+    TEST = False
     print('Would you like to take on another mission?\n')
-    while check is False:
+    while TEST is False:
         answer = input('Enter y for yes and n for no.\n')
         if answer in ('y', 'Y', 'n', 'N'):
-            check = True
+            TEST = True
     if answer in ('n', 'N'):
-        play_again = False
+        PLAY_AGAIN = False
 print(f'Thank you for your service Admiral {name}!')
