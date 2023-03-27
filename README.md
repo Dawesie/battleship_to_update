@@ -7,7 +7,12 @@ my game can be accessed from:
 https://dawesies-my-battleship.herokuapp.com/ 
 
 
-Pictures on desktop and mobile
+Below are inages of the game running on a desk top and mobile device.
+
+![alt text](images/desktop.jpg)
+
+
+![alt text](images/mobile.jpg)
 
 
 # **How to play:**
@@ -20,6 +25,7 @@ The user is asked for firing locations on the grid.  “X” represents a shot t
 ## **Existing features**
 
 **Rules of engagement**
+
 Once the user has inputted their name, the rules and levels of the game are displayed.
 
 The user is then asked to input the game level they want to play.
@@ -27,7 +33,7 @@ The user is then asked to input the game level they want to play.
 ![alt text](images/game_rules.jpg)
 
 Once the level is inputted the playing board is generated.
-The user will see the grid of “o”s and then be asked to input a row value.
+The user will see the grid of “o”s and then be asked to input a row value.  The user is advised that the game is using zero indexing.
 
 ![alt text](images/playing_grid.jpg)
 
@@ -63,6 +69,8 @@ Inputs must be numbers, y or n and a string for the name.
 When there is time:
 
 - I would like to add colour to the game.
+
+- I would like to remove the zero indexing and use an alpa-numeric system.
 
 - Allow the user to choose their own mission parameters.
 
@@ -106,6 +114,7 @@ Steps followed were:
 
 - Fork or clone the repository.
 - Create a new Heroku App.
+- in settings add Config Var add PORT to key and 8000 to value. 
 - Set the buildingbacks to Python and NodeJS in that order.
 - Link the Heroku App to repository.
 - Click on Deploy.
