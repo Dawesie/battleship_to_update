@@ -119,7 +119,7 @@ Steps followed were:
 - Link the Heroku App to repository.
 - Click on Deploy.
 
-#**Credits**
+# **Credits**
 
 Websites that helped to inspired me to formulate ideas to develop the code for my own project.
 
